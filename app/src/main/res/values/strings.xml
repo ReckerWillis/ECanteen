@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ECanteen</string>
+    <string name="rightAddress">text motto aplikasi</string>
+    <string name="quality">deskripsi\ndeskripsi\ndeskripsi</string>
 </resources>
