@@ -142,7 +142,8 @@
             app:layout_constraintTop_toBottomOf="@id/regPasswordPass"
             app:layout_constraintStart_toStartOf="@id/guidelineLoginLeft"
             app:layout_constraintEnd_toEndOf="@id/guidelineLoginRight"
-            android:text="Register"/>
+            android:text="Register"
+            app:spinning_bar_color="@color/white"/>
 
 
         <androidx.constraintlayout.widget.Guideline

@@ -49,6 +49,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.firebase:firebase-firestore:24.9.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -75,8 +76,8 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
 
     //Dagger hilt
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+    implementation("com.google.dagger:hilt-android:2.40.1")
+    annotationProcessor("com.google.dagger:hilt-android-compiler:2.40.1")
 
 
     //Firebase

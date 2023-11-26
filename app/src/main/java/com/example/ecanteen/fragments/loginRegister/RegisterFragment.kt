@@ -10,13 +10,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.ecanteen.R
 import com.example.ecanteen.data.User
 import com.example.ecanteen.databinding.FragmentRegisterBinding
+import com.example.ecanteen.util.RegisterValidation
 import com.example.ecanteen.util.Resource
 import com.example.ecanteen.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 private val TAG = "RegisterFragment"
 @AndroidEntryPoint
 class RegisterFragment:Fragment() {
@@ -34,6 +40,9 @@ class RegisterFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.tvPunyaAkun.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
         binding.apply {
             buttonRegisterRegister.setOnClickListener {
                 val user = User(
@@ -60,6 +69,26 @@ class RegisterFragment:Fragment() {
                         binding.buttonRegisterRegister.revertAnimation()
                     }
                     else -> Unit
+                }
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.validation.collect{validation ->
+                if (validation.email is RegisterValidation.Failed){
+                    withContext(Dispatchers.Main){
+                        binding.regEmail.apply {
+                            requestFocus()
+                            error = validation.email.message
+                        }
+                    }
+                }
+                if(validation.password is RegisterValidation.Failed){
+                    withContext(Dispatchers.Main){
+                        binding.regPasswordPass.apply {
+                            requestFocus()
+                            error = validation.password.message
+                        }
+                    }
                 }
             }
         }
