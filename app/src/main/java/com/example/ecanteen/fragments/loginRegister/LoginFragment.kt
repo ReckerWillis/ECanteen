@@ -13,9 +13,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.ecanteen.R
 import com.example.ecanteen.activities.ShoppingActivity
 import com.example.ecanteen.databinding.FragmentLoginBinding
+import com.example.ecanteen.dialog.setupBottomSheetDialog
 import com.example.ecanteen.util.Resource
 import com.example.ecanteen.viewmodel.LoginViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import java.util.zip.Inflater
 
 @AndroidEntryPoint
@@ -44,6 +47,30 @@ class LoginFragment:Fragment(R.layout.fragment_login) {
                 viewModel.login(email,password)
             }
         }
+
+        binding.tvForgotPasswordLogin.setOnClickListener {
+            setupBottomSheetDialog {email ->
+                viewModel.resetPassword(email)
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.resetPassword.collect{
+                when(it){
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Success -> {
+                        Snackbar.make(requireView(),"Tautan telah dikirimkan ke email anda",Snackbar.LENGTH_LONG).show()
+                    }
+                    is Resource.Error ->{
+                        Snackbar.make(requireView(),"Error: ${it.message}",Snackbar.LENGTH_LONG).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
+
         lifecycleScope.launchWhenStarted {
             viewModel.login.collect{
                 when(it){
