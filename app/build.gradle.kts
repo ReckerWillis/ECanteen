@@ -6,6 +6,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -76,8 +77,8 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
 
     //Dagger hilt
-    implementation("com.google.dagger:hilt-android:2.40.1")
-    annotationProcessor("com.google.dagger:hilt-android-compiler:2.40.1")
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
 
 
     //Firebase
