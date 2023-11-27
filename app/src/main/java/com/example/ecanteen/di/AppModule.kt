@@ -1,5 +1,8 @@
 package com.example.ecanteen.di
 
+import android.app.Application
+import android.content.Context.MODE_PRIVATE
+import com.example.ecanteen.util.Constants.INTRODUCTION_SP
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
@@ -19,4 +22,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFirebaseFirestoreDatabase() = Firebase.firestore
+
+    @Provides
+    fun provideIntroductionSP(
+        application: Application
+    )= application.getSharedPreferences(INTRODUCTION_SP, MODE_PRIVATE)
 }
