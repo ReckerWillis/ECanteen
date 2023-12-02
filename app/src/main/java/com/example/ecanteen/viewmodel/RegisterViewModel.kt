@@ -25,7 +25,7 @@ class RegisterViewModel @Inject constructor(
     private val db: FirebaseFirestore
 ): ViewModel(){
 
-    private val _register = MutableStateFlow<Resource<User>>(Resource.unspecified())
+    private val _register = MutableStateFlow<Resource<User>>(Resource.Unspecified())
     val register: Flow<Resource<User>> = _register
     private val _validation = Channel<RegisterFieldsState> {  }
     val validation = _validation.receiveAsFlow()

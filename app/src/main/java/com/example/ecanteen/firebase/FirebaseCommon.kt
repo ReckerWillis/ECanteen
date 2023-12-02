@@ -8,41 +8,54 @@ class FirebaseCommon(
     private val firestore: FirebaseFirestore,
     private val auth: FirebaseAuth
 ) {
-    private val userCollection = "user"
-    private val cartCollectionName = "cart"
 
-    private val cartCollection = firestore.collection(userCollection)
-        .document(auth.uid ?: "")
-        .collection(cartCollectionName)
+    private val cartCollection =
+        firestore.collection("user").document(auth.uid!!).collection("cart")
 
-    fun addProductToCart(cartProduct: CartProduct, onResult: (Result<CartProduct>) -> Unit) {
+    fun addProductToCart(cartProduct: CartProduct, onResult: (CartProduct?,Exception?) -> Unit) {
         cartCollection.document().set(cartProduct)
             .addOnSuccessListener {
-                onResult(Result.success(cartProduct))
+                onResult(cartProduct, null)
             }.addOnFailureListener {
-                onResult(Result.failure(it))
+                onResult(null, it)
             }
     }
 
-    fun increaseQuantity(documentId: String, onResult: (Result<String>) -> Unit) {
+    fun increaseQuantity(documentId: String, onResult: (String?, Exception?) -> Unit){
         firestore.runTransaction { transition ->
             val documentRef = cartCollection.document(documentId)
             val document = transition.get(documentRef)
             val productObject = document.toObject(CartProduct::class.java)
-
             productObject?.let { cartProduct ->
                 val newQuantity = cartProduct.quantity + 1
                 val newProductObject = cartProduct.copy(quantity = newQuantity)
-                transition.set(documentRef, newProductObject)
+                transition.set(documentRef,newProductObject)
             }
         }.addOnSuccessListener {
-            onResult(Result.success(documentId))
+            onResult(documentId, null)
         }.addOnFailureListener {
-            onResult(Result.failure(it))
+            onResult(null, it)
         }
     }
 
-    enum class QuantityChanging {
+    fun decreaseQuantity(documentId: String, onResult: (String?, Exception?) -> Unit){
+        firestore.runTransaction { transition ->
+            val documentRef = cartCollection.document(documentId)
+            val document = transition.get(documentRef)
+            val productObject = document.toObject(CartProduct::class.java)
+            productObject?.let { cartProduct ->
+                val newQuantity = cartProduct.quantity - 1
+                val newProductObject = cartProduct.copy(quantity = newQuantity)
+                transition.set(documentRef,newProductObject)
+            }
+        }.addOnSuccessListener {
+            onResult(documentId, null)
+        }.addOnFailureListener {
+            onResult(null, it)
+        }
+    }
+
+    enum class QuantityChanging{
         INCREASE, DECREASE
     }
 }

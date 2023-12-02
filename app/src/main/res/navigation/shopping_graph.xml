@@ -32,13 +32,20 @@
         <action
             android:id="@+id/action_cartFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_billingFragment"
+            app:destination="@id/billingFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.ecanteen.fragments.shopping.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"
-        />
+        >
+        <action
+            android:id="@+id/action_profileFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.ecanteen.fragments.shopping.ProductDetailFragment"
@@ -47,5 +54,25 @@
         <argument
             android:name="product"
             app:argType="com.example.ecanteen.data.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.example.ecanteen.fragments.shopping.AddressFragment"
+        android:label="AddressFragment"
+        tools:layout="@layout/fargment_address"/>
+    <fragment
+        android:id="@+id/billingFragment"
+        android:name="com.example.ecanteen.fragments.shopping.BillingFragment"
+        android:label="BillingFragment"
+        tools:layout="@layout/fragment_billing">
+        <action
+            android:id="@+id/action_billingFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <argument
+            android:name="totalPrice"
+            app:argType="float" />
+        <argument
+            android:name="products"
+            app:argType="com.example.ecanteen.data.CartProduct[]" />
     </fragment>
 </navigation>

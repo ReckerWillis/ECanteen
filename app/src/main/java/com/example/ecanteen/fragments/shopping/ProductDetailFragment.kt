@@ -12,19 +12,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ecanteen.R
-import com.example.ecanteen.activities.ShoppingActivity
 import com.example.ecanteen.adapters.ColorAdapter
 import com.example.ecanteen.adapters.SizesAdapter
 import com.example.ecanteen.adapters.ViewPager2Images
 import com.example.ecanteen.data.CartProduct
 import com.example.ecanteen.databinding.FragmentProductDetailsBinding
-import com.example.ecanteen.databinding.SizeRvItemBinding
 import com.example.ecanteen.util.Resource
 import com.example.ecanteen.util.hideBottomNavigation
 import com.example.ecanteen.viewmodel.DetailsViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -70,21 +66,21 @@ class ProductDetailFragment: Fragment() {
         }
 
         binding.ButtonAddtoCart.setOnClickListener{
-            viewModel.addUpdateProductINCart(CartProduct(product, 1, selectedColor,selectedSize))
+            viewModel.addUpdateProductInCart(CartProduct(product, 1, selectedColor,selectedSize))
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.addTocart.collectLatest {
-                when (it) {
+            viewModel.addToCart.collectLatest {
+                when(it){
                     is Resource.Loading -> {
                         binding.ButtonAddtoCart.startAnimation()
                     }
                     is Resource.Success -> {
-                        binding.ButtonAddtoCart.stopAnimation()
-                        Toast.makeText(requireContext(), "Product was added", Toast.LENGTH_SHORT).show()
+                        binding.ButtonAddtoCart.startAnimation()
+                        Toast.makeText(requireContext(),"Product was added",Toast.LENGTH_SHORT).show()
                     }
                     is Resource.Error -> {
-                        binding.ButtonAddtoCart.stopAnimation()
+                        binding.ButtonAddtoCart.startAnimation()
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> Unit

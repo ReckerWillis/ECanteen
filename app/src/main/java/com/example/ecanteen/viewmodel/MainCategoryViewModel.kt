@@ -16,13 +16,13 @@ class MainCategoryViewModel @Inject constructor(
     private val firestore: FirebaseFirestore
 ):ViewModel() {
 
-    private val _specialProducts = MutableStateFlow<com.example.ecanteen.util.Resource<List<Product>>>(com.example.ecanteen.util.Resource.unspecified())
+    private val _specialProducts = MutableStateFlow<com.example.ecanteen.util.Resource<List<Product>>>(com.example.ecanteen.util.Resource.Unspecified())
     val specialProduct : StateFlow<com.example.ecanteen.util.Resource<List<Product>>> = _specialProducts
 
-    private val _bestDealProducts = MutableStateFlow<com.example.ecanteen.util.Resource<List<Product>>>(com.example.ecanteen.util.Resource.unspecified())
+    private val _bestDealProducts = MutableStateFlow<com.example.ecanteen.util.Resource<List<Product>>>(com.example.ecanteen.util.Resource.Unspecified())
     val bestDealProducts : StateFlow<com.example.ecanteen.util.Resource<List<Product>>> = _bestDealProducts
 
-    private val _bestProduct = MutableStateFlow<com.example.ecanteen.util.Resource<List<Product>>>(com.example.ecanteen.util.Resource.unspecified())
+    private val _bestProduct = MutableStateFlow<com.example.ecanteen.util.Resource<List<Product>>>(com.example.ecanteen.util.Resource.Unspecified())
     val bestProduct : StateFlow<com.example.ecanteen.util.Resource<List<Product>>> = _bestProduct
 
     private val pagingInfo = PagingInfo()
