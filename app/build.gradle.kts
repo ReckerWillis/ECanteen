@@ -89,4 +89,7 @@ dependencies {
 
     //Firebase
     implementation("com.google.firebase:firebase-auth:22.3.0")
+
+    //Coururtines with firebase
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shopping_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/userAccountFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -43,8 +43,14 @@
         tools:layout="@layout/fragment_profile"
         >
         <action
-            android:id="@+id/action_profileFragment_to_addressFragment"
-            app:destination="@id/addressFragment" />
+            android:id="@+id/action_profileFragment_to_userAccountFragment"
+            app:destination="@id/userAccountFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_ordersFragment2"
+            app:destination="@id/ordersFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_billingFragment2"
+            app:destination="@id/billingFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -59,7 +65,13 @@
         android:id="@+id/addressFragment"
         android:name="com.example.ecanteen.fragments.shopping.AddressFragment"
         android:label="AddressFragment"
-        tools:layout="@layout/fargment_address"/>
+        tools:layout="@layout/fargment_address">
+        <argument
+            android:name="address"
+            app:argType="com.example.ecanteen.data.Address"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/billingFragment"
         android:name="com.example.ecanteen.fragments.shopping.BillingFragment"
@@ -74,5 +86,28 @@
         <argument
             android:name="products"
             app:argType="com.example.ecanteen.data.CartProduct[]" />
+        <argument
+            android:name="payment"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/userAccountFragment"
+        android:name="com.example.ecanteen.fragments.Settings.UserAccountFragment"
+        android:label="UserAccountFragment" />
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.example.ecanteen.fragments.Settings.AllOrdersFragment"
+        android:label="OrdersFragment" >
+        <action
+            android:id="@+id/action_ordersFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.example.ecanteen.fragments.Settings.OrderDetailFragment"
+        android:label="OrderDetailFragment" >
+        <argument
+            android:name="order"
+            app:argType="com.example.ecanteen.data.order.Order" />
     </fragment>
 </navigation>
